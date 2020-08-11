@@ -2,7 +2,7 @@
 
 - If you're using windows, download curl at: https://curl.haxx.se/download.html
 
-## Generate the Grant token
+## Generate the Grant token - Authenticate the client app using Self Client application
 
 To create the grant token you should create a Self Client and generate the token from this client. The steps to generate the token is detailed bellow:
 

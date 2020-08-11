@@ -2,7 +2,7 @@
 
 - Install Apache Maven in your enviroment. 
 
-## Generate the Grant token
+## Generate the Grant token - Authenticate the client app using Self Client application
 
 To create the grant token you should create a Self Client and generate the token from this client. The steps to generate the token is detailed bellow:
 
@@ -10,8 +10,8 @@ To create the grant token you should create a Self Client and generate the token
 2. Create a Self Client Application. 
 3. On the Generate Code tab create the Grant Token with the following parameters:
 
-- Scope: This is the access permissions for the Zoho domain objects. 
-  - For this example, add the user scope: ZohoCRM.users.all
+- Scope: This is the access permissions for the Zoho domain objects. The scope AAAserver.profile.Read is required. 
+  - For this example, add the user scope: AAAserver.profile.Read,ZohoCRM.users.all
 - Time Duration: How long the grant token will be valid.
 - Scope Description: Any description.
   - For this example: Users.
@@ -33,7 +33,7 @@ currentUser | The email ID of the current user (the one that you generated the S
 This is a example command to execute the Java application:
 
 ```
-mvn -DclientId=1000.... -DclientSecret=1000.... -DgrantToken=1000.... -DcurrentUser=test@test.com exec:java 
+mvn -DclientId=1000.... -DclientSecret=1000.... -DgrantToken=1000.... -DcurrentUser=test@test.com exec:java -Dexec.mainClass="com.angelogalvao.samples.Application"
 ```
 
 ## Execute the Java Application in 2 steps
@@ -41,7 +41,7 @@ mvn -DclientId=1000.... -DclientSecret=1000.... -DgrantToken=1000.... -DcurrentU
 If you want, you can  create the access tokens: 
 
 ```
-mvn -DclientId=1000.... -DclientSecret=1000.... -DgrantToken=1000.... -DcurrentUser=test@test.com exec:java -Dexec.mainClass="com.angelogalvao.samples.GenerateAccessToken"
+mvn -DclientId=1000.... -DclientSecret=1000.... -DgrantToken=1000.... exec:java -Dexec.mainClass="com.angelogalvao.samples.GenerateAccessToken"
 ```
 
 And then, you can call the Zoho CRM service:
