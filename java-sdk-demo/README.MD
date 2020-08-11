@@ -1,6 +1,6 @@
-# How to integrate with ZohoCRM using Curl
+# How to integrate with ZohoCRM using Java SDK
 
-- If you're using windows, download curl at: https://curl.haxx.se/download.html
+- Install Apache Maven in your enviroment. 
 
 ## Generate the Grant token
 
@@ -19,42 +19,33 @@ To create the grant token you should create a Self Client and generate the token
 
 4. Copy the generated token. 
 
-## Create the access token
+## Execute the Java Application
 
-To create the access token, make a POST request to https://accounts.zoho.com/oauth/v2/token API resource with the following parameters:
+To execute the Java Application you should pass the following system properties to the Java application:
 
 Parameter | Value
 --------- | -----
-grant_type| authorization_code
-client_id | The generated client_id value from the Self Client Application
-client_secret | The generated client_secret value from the Self Client Application
-code | The *grant token* generated in the previous step.
+clientId | The generated *client_id* value from the Self Client Application
+clientSecret | The generated *client_secret* value from the Self Client Application
+grantToken | The generated *grant token*  in the previous step.
+currentUser | The email ID of the current user (the one that you generated the Self Client Application).
 
-This is a example request using curl (just replace the values with the actual value):
-
-```
-curl -d "grant_type=authorization_code&client_id=100.xxx&client_secret=xxx&code=1000.abc" -X POST https://accounts.zoho.com/oauth/v2/token
-```
-The response of this servic should be a json object like this:
+This is a example command to execute the Java application:
 
 ```
-{"access_token":"1000....",
-"refresh_token":"1000.....",
-"api_domain":"https://www.zohoapis.com",
-"token_type":"Bearer",
-"expires_in":3600}
+mvn -DclientId=1000.... -DclientSecret=1000.... -DgrantToken=1000.... -DcurrentUser=test@test.com exec:java 
 ```
 
+## Execute the Java Application in 2 steps
 
-# Call the Zoho API
-
-For this example, get all the users from the ZohoCRM instance. Take notice that you should add the access token that you generated in the previous step in front of Authorization: Zoho-oauthtoken HTTP header. 
+If you want, you can  create the access tokens: 
 
 ```
-curl "https://www.zohoapis.com/crm/v2/users?type=AllUsers" \
-    -X GET \
-    -H "Authorization: Zoho-oauthtoken 1000.xyz"
+mvn -DclientId=1000.... -DclientSecret=1000.... -DgrantToken=1000.... -DcurrentUser=test@test.com exec:java -Dexec.mainClass="com.angelogalvao.samples.GenerateAccessToken"
 ```
 
+And then, you can call the Zoho CRM service:
 
-
+```
+mvn -DcurrentUser=test@test.com exec:java -Dexec.mainClass="com.angelogalvao.samples.GetAllUsersExample"
+```
